@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>2D Sierpinski Gasket</title>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+attribute vec4 vPosition;
+
+void
+main()
+{
+	gl_PointSize = 1.0;
+    gl_Position = vPosition;
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+
+void
+main()
+{
+    gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
+}
+</script>
+
+ <!-- webgl-utils.js: create webGL canvas --> 
+        <script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/webgl-utils.js"></script>
+    <!-- initShaders.js: library to read, compile, and link the shaders --> 
+        <script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/initShaders.js"></script>
+    <!-- MV.js: functions for basic matrix and vector manipiulation --> 
+        <script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/MV.js"></script>
+    <!-- file path/link to the actual javascript file itself, we give it a name so we can refer to it in our application (the .js file I think) 
+          and we also need to specify the dimensions of the canvas here in the HTML file as we do below  --> 
+      
+<script type="text/javascript" src="gasket1.js"></script>
+</head>
+
+<body>
+<canvas id="gl-canvas" width="512" height="512">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+</body>
+</html>
