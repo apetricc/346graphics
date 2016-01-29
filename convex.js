@@ -4,7 +4,7 @@
  * Modified by Andrew Petriccione
  * Last Modified: 1-12-2016
  * 
- * Draws a square on screen
+ * Draws shapes on screen
  */
 var gl;
 var points;
@@ -41,7 +41,14 @@ function canvasMain() {
         vec2(.7,.3),
         vec2(.2,-.1),
         vec2(.3,.7),
-        vec2(.5,.0)
+        vec2(.5,.0),
+        //vertices for 4th shape
+        vec2(.5,-.32),
+        vec2(.5,-.75),
+        vec2(.9,-.73),
+        vec2(.2,-.71),
+        vec2(.3,-.73),
+        vec2(.5,-.720)
         
     ];
 
@@ -84,8 +91,11 @@ function drawScene() {
     
     gl.drawArrays(gl.TRIANGLE_FAN, 5, 5);
     
-    gl.drawArrays(gl.POINTS, 10, 5);
-    gl.drawArrays(gl.TRIANGLE_FAN, 10, 5);
+    gl.drawArrays(gl.POINTS, 10, 6);
+    gl.drawArrays(gl.TRIANGLE_FAN, 10, 6);
+    
+    gl.drawArrays(gl.POINTS, 16, 5);
+    gl.drawArrays(gl.LINE_LOOP, 16, 5);
     
     
     
@@ -93,7 +103,7 @@ function drawScene() {
       we have one big array with all the points/vertices. The array is called vertices.  It is an array of type vec2. 
      Later, we call gl.drawArrays for each object we want to draw-- 
      1st parameter is the type of line we want to connect the points(gl.LINES, gl.LINE_LOOP, etc.),
-     2nd is what index to start at in the array.  **Not sure how it knows which array to look in** 
+     2nd is what index to start at in the array.  **Not sure how it knows which array to look in**  --drawScene() gets called at the end of canvasMain()-- 
      3rd parameter is how many points (or sides?) in our object--square would be 4, triangle 3 etc.
     
     **/
