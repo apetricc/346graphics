@@ -50,10 +50,10 @@ function canvasMain() {
     gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vPosition);
 
-    drawScene();
+    drawSquare();
 };
 
-function drawScene() {
+function drawSquare() {
     
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.POINTS, 0, 4);

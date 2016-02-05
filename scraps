@@ -1,0 +1,8 @@
+var drawTypes = [
+    "gl.LINES",
+    "gl.POINTS",
+    "gl.LINE_STRIP",
+    "gl.LINE_LOOP",
+    "gl.TRIANGLE_FAN"
+    
+    ];

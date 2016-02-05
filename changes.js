@@ -4,7 +4,7 @@
  * Modified by Andrew Petriccione
  * Last Modified: 1-29-2016
  * 
- * Draws a square on screen
+ * Draws some random shapes on screen
  */
 
 var gl;
@@ -23,36 +23,21 @@ function myCanvas() {
     //  Configure WebGL
 
     gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.clearColor(1.0, 0.5, 0.2, 1.0);
+    gl.clearColor(1.0, 0.5, 0.2, .6);
 
     //  Load shaders and initialize attribute buffers
 
     var program = initShaders(gl, "vertex-shader", "fragment-shader");
     gl.useProgram(program);
     gl.clear(gl.COLOR_BUFFER_BIT);
-    //try drawing points etc like I did before
-    
-    
-    
-        
-    var objColor = [Math.random(), Math.random(), Math.random(), 1];
-    drawObject(gl, program, generateCircle(1, 50), objColor, gl.TRIANGLE_FAN);
-    objColor = [Math.random(), Math.random(), Math.random(), 1];
-    drawObject(gl, program, generateCircleDots(1, 50), objColor, gl.POINTS);
-    drawObject(gl, program, generateCog(0.5,26), objColor, gl.LINE_STRIP);
-    drawObject(gl, program, generateShape(0.5, 52), objColor, gl.LINES);
-    drawObject(gl, program, generateOtherShape(0.5, 52), objColor, gl.TRIANGLE_FAN);
-    /**
-    var objColor = [Math.random(), Math.random(), Math.random(), 1];
-    drawObject(gl, program, generateShape(1,50), objColor, gl.TRIANGLE_FAN);
-    drawObject(gl, program, generateCircleDots(1, 50), objColor, g.POINTS);
-    drawObject(gl, program, generateCircleDots(1, 50), objColor, gl.POINTS);
-    drawObject(gl, program, generateCircle(1, 50), objColor, gl.LINE_LOOP);
-    objColor = [Math.random(), Math.random(), Math.random(), .5];
-    drawObject(gl, program, generateCog(0.7,11), objColor, gl.LINES);
-    drawObject(gl, program, generateShape(Math.random(), 52), objColor, gl.TRIANGLE_FAN);
-    drawObject(gl, program, generateOtherShape(Math.random()*(50-2)+2, 52), objColor, gl.LINE_LOOP);
-    **/
+        objColor = [Math.random(), Math.random(), Math.random(), 1];
+        drawObject(gl, program, generateCircleDots(Math.random(), 50), objColor, gl.POINTS);
+        drawObject(gl, program, generateCog(0.5,26), objColor, gl.LINE_STRIP);
+        drawObject(gl, program, generateShape(0.5, 52), objColor, gl.LINES);
+        drawObject(gl, program, generateOtherShape(1, 52), objColor, gl.TRIANGLE_FAN);
+
+        drawObject(gl, program, generateOtherShape(1, 52), objColor, gl.TRIANGLE_FAN);
+
     //   gl.POINTS
     //   gl.LINES
     //   gl.LINE_STRIP
@@ -69,7 +54,7 @@ function generateCircleDots(radius, pointCount){
         circleVertices.push(vec2((radius/2)*Math.cos(theta), radius*Math.sin(theta)));
         circleVertices.push(vec2(radius*Math.cos(theta), (radius/2)*Math.sin(theta)));
         circleVertices.push(vec2(radius*Math.cos(theta), radius*Math.sin(theta)));
-    }//generate circle
+    }//generate circle dots
    // console.log("This is what I want to add as my drawing method:  " );
     return circleVertices;
 };//generateCircle
@@ -102,25 +87,21 @@ function generateCog(base, pointCount){
     console.log("generate cog used this in it's loop:  " + inc);
     return vertices;
 };//generateCog
-/**
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-**/
 function generateShape(base, pointCount){
     var vertices = [];
-    var inc =2*Math.PI / pointCount;
+    var inc =2*Math.cos *2*theta;
     var radius;
-    
+    //r2 = a2cos(2theta)
     for (var theta = 0; theta <2*Math.PI; theta += inc){
         radius = Math.random()*base;
         vertices.push(vec2(radius*Math.cos(theta), (Math.random())*radius*Math.sin(theta)));
         vertices.push(vec2(0,0));
-    }//generate Star
-    console.log("generate shape used this in it's loop:  " + inc);
+    }//generate Shape
+
     return vertices;
 };//generateShape
+
 
 function generateOtherShape(base, pointCount){
     var vertices = [];
@@ -131,8 +112,7 @@ function generateOtherShape(base, pointCount){
         radius = Math.random()*base;
         vertices.push(vec2(radius*Math.cos(theta), (Math.random())*radius*Math.sin(theta)));
         vertices.push(vec2(0,0));
-    }//generate Star
-    console.log("generate other shape used this in it's loop:  " + inc);
+    }//generate other shape inc);
     return vertices;
 };//generateOtherShape
 
