@@ -18,7 +18,23 @@ function pickOne() {
     gl.TRIANGLE_FAN
     
     ];
-    return drawTypes[Math.floor(Math.random() * (5))];
+    return drawTypes[Math.floor(Math.random() * (6))];
+}
+
+//return between min and max inclusive:
+// return Math.floor(Math.random() * (max - min + 1)) + min
+/**
+if (returnNum > 7) {
+        drawObject(gl, program, generateCog(0.5,26), objColor, gl.LINE_STRIP);       
+    } else drawObject(gl, program, generateStar(0.5, 52), objColor, gl.LINE_STRIP);
+**/
+
+function returnNum() {
+    return (Math.floor(Math.random() * 15));
+}
+
+function returnRange() {
+    return (Math.round(Math.random() * 2));
 }
 function myCanvas() {
     var canvas = document.getElementById("gl-canvas"); //must be in html
@@ -28,22 +44,25 @@ function myCanvas() {
         alert("WebGL isn't available");
     }
   
-
+// use an if statement instead of a loop-- if below a certain range call one method
+    // if ablove that range call the other method
     //  Configure WebGL
 
     gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.clearColor(.2, 0.9, 0.15, .7);
+    gl.clearColor(Math.random(), Math.random(), Math.random(), Math.random());
 
     //  Load shaders and initialize attribute buffers
 
     var program = initShaders(gl, "vertex-shader", "fragment-shader");
     gl.useProgram(program);
     gl.clear(gl.COLOR_BUFFER_BIT);
-    
-    var objColor = [Math.random(), Math.random(), Math.random(), 1];
-    drawObject(gl, program, generateCircle(.75, 22, .5, .5), objColor, pickOne());
-    drawObject(gl, program, makeSpiral(), objColor, gl.TRIANGLE_FAN);
-    console.log(pickOne());
+    var objColor1 = [Math.random(), Math.random(), Math.random(), 1];
+    //var objColor2 = [Math.random(), Math.random(), Math.random(), 1];
+    var objColor2 = [1,0,0,1];
+    //drawObject(gl, program, generateCircle(.5, returnNum(), 0, returnRange()), objColor1, pickOne());
+    //drawObject(gl, program, generateCircle(.5, returnNum(), 0, returnRange()), objColor2, pickOne());
+    drawObject(gl, program, makeSpiral(0.05,100), objColor2, gl.LINE_STRIP);
+console.log(pickOne());
     objColor = [Math.random(), Math.random(), Math.random(), 1];
     
     
@@ -59,7 +78,17 @@ function myCanvas() {
     //   gl.TRIANGLE_FAN
 };//CanvasMain
 
-
+function makeSpiral(a, pointCount) {
+    //x = a(cos(t) + t sin(t)), y = a(sin(t) - t cos(t))
+    var b=pickOne();
+    var vertices = [];
+    var inc = b*Math.PI / pointCount;
+    for (var theta = 0; theta < b*Math.PI; theta += inc) {
+        vertices.push(vec2(a*(Math.cos(theta) + theta*Math.sin(theta)), (a*(Math.sin(theta) - theta*Math.cos(theta)))));
+    }//makeSpiral
+    console.log(vertices);
+    return vertices;
+};
 
 function generateCircle(radius, pointCount, x, y){
     var circleVertices = [];
@@ -72,11 +101,7 @@ function generateCircle(radius, pointCount, x, y){
     return circleVertices;
 };//generateCircle
 
-function makeSpiral() {
-    //x = a(cos(t) + t sin(t)), y = a(sin(t) - t cos(t))
-    var vertices = [100];
-    
-};
+
 
 function makeSquare(size) {
     //rp = ap cos(pθ)
@@ -87,7 +112,9 @@ function makeSquare(size) {
     for (var theta = 0; theta < size; theta+= inc) {
         vertices.push(vec2(Math.cos(theta), size*Math.cos(theta)));
     }
-}
+};
+
+
 
 
 function generateCog(base, pointCount){
