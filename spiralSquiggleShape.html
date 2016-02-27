@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+   Author:  Andrew Petriccione
+   Partner: Dahquan Williams 
+   Source: Modification from Code supplement to textbook-->
+<html>
+    <head>
+        <meta http-equiv="refresh" content="2">
+        <title>SpiralSquiggleShape</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script id="vertex-shader" type="x-shader/x-vertex">
+
+            attribute vec4 vPosition;
+            void main()
+            {    //gl_PointSize = 2.0;  //set pointSize
+                 gl_PointSize = 15.0;
+                 gl_Position = vPosition;
+            }
+        </script>
+
+        <script id="fragment-shader" type="x-shader/x-fragment">
+
+            precision mediump float;
+
+            uniform vec4 uColor;
+
+            void main() {
+               gl_FragColor = uColor;
+            }
+        </script>
+
+        <script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/webgl-utils.js"></script>
+        <script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/initShaders.js"></script>
+        <script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/MV.js"></script>
+        <script type="text/javascript" src="spiralSquiggleShape.js"></script>
+
+
+    </head>
+    
+    
+    <body onload="myCanvas()">
+        <div>
+            <canvas id="gl-canvas" width="512" height="512">
+                oops ... your browser doesn't support the HTML5 canvas element
+            </canvas>
+
+        </div>
+    </body>
+</html>

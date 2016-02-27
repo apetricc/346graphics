@@ -1,25 +1,35 @@
 /**
  * 
  * @author:  Edward Angel
- * Modified by Marietta E. Cameron
+ * Modified by Andrew Petriccione
  * Last Modified: 1-26-2016
  * 
- * Draws a square on screen
+ * Draws a shapes on the screen
  */
 
 var gl;
 var points;
-function pickOne() {
+function pickDrawType() {
+    var drawTypes = [
+    gl.LINES,
+    gl.POINTS,
+    gl.LINE_STRIP,
+    gl.LINE_LOOP    
+    ];
+    return drawTypes[Math.floor(Math.random() * (5))];
+}
+
+function pickDrawType2() {
     var drawTypes = [
     gl.LINES,
     gl.POINTS,
     gl.LINE_STRIP,
     gl.LINE_LOOP,
-    gl.TRIANGLE_FAN
-    
+    gl.TRIANGLE_FAN    
     ];
     return drawTypes[Math.floor(Math.random() * (6))];
 }
+
 
 //return between min and max inclusive:
 // return Math.floor(Math.random() * (max - min + 1)) + min
@@ -34,7 +44,7 @@ function returnNum() {
 }
 
 function returnRange() {
-    return (Math.round(Math.random() * 2));
+    return (Math.round(Math.random() * (100) + 1));
 }
 function myCanvas() {
     var canvas = document.getElementById("gl-canvas"); //must be in html
@@ -52,43 +62,58 @@ function myCanvas() {
     gl.clearColor(Math.random(), Math.random(), Math.random(), Math.random());
 
     //  Load shaders and initialize attribute buffers
-
     var program = initShaders(gl, "vertex-shader", "fragment-shader");
     gl.useProgram(program);
     gl.clear(gl.COLOR_BUFFER_BIT);
+    var objColor = [1, 0, 1, 1];
     var objColor1 = [Math.random(), Math.random(), Math.random(), 1];
-    //var objColor2 = [Math.random(), Math.random(), Math.random(), 1];
-    var objColor2 = [1,0,0,1];
-    //drawObject(gl, program, generateCircle(.5, returnNum(), 0, returnRange()), objColor1, pickOne());
-    //drawObject(gl, program, generateCircle(.5, returnNum(), 0, returnRange()), objColor2, pickOne());
-    drawObject(gl, program, makeSpiral(0.05,100), objColor2, gl.LINE_STRIP);
-console.log(pickOne());
-    objColor = [Math.random(), Math.random(), Math.random(), 1];
+    var objColor2 = [Math.random(), Math.random(), Math.random(), 1];
     
+    if (objColor == objColor1 || objColor == objColor2) {
+        objColor = [.2,0,.1,.3];
+        objColor1 = [0,.7,.4,.6];
+        objColor2 = [1,0,0,1];    
+    }
     
+    drawObject(gl, program, makeSpiral(0.05,200), objColor2, pickDrawType2());
+
+    drawObject(gl, program, generateCircle(.5, 100, Math.random(), -.2), objColor, pickDrawType());
+    drawObject(gl, program, generateCircle(.5, 100, Math.random() * (-1), Math.random() * (-1)), objColor2, pickDrawType());
+    drawObject(gl, program, generateCircle(.5, 100, -.2, Math.random()), objColor, pickDrawType());
+    drawObject(gl, program, generateCircle(.5, 100, Math.random() * (-1), Math.random() * (-1)), objColor2, pickDrawType());
+    drawObject(gl, program, generateCircle(.5, returnNum(), Math.random() * (-1), Math.random() * (-1)), objColor2, pickDrawType());
     
-    /**
-    drawObject(gl, program, generateCog(0.5,26), objColor, gl.LINE_STRIP);
-    drawObject(gl, program, generateStar(0.5, 52), objColor, gl.LINE_STRIP);
-    **/
-    //   gl.POINTS
-    //   gl.LINES
-    //   gl.LINE_STRIP
-    //   gl.LINE_LOOP
-    //   gl.TRIANGLE_FAN
+    drawObject(gl, program, makeSpiral(0.05,returnRange), objColor2, gl.LINE_STRIP);
+console.log(pickDrawType());
+    console.log(pickDrawType());
+drawObject(gl, program, makeMutantSpiral(0.05,200), objColor2, gl.LINE_STRIP);
+console.log(pickDrawType());
+    console.log(pickDrawType());
+
 };//CanvasMain
 
 function makeSpiral(a, pointCount) {
     //x = a(cos(t) + t sin(t)), y = a(sin(t) - t cos(t))
-    var b=pickOne();
+    var b = returnNum();
     var vertices = [];
     var inc = b*Math.PI / pointCount;
     for (var theta = 0; theta < b*Math.PI; theta += inc) {
         vertices.push(vec2(a*(Math.cos(theta) + theta*Math.sin(theta)), (a*(Math.sin(theta) - theta*Math.cos(theta)))));
-    }//makeSpiral
-    console.log(vertices);
+    }
     return vertices;
-};
+};//makeSpiral
+
+
+function makeMutantSpiral(a, pointCount) {
+    //x = a(cos(t) + t sin(t)) + random, y = a(sin(t) - t cos(t)) + random
+    var b = returnNum();
+    var vertices = [];
+    var inc = b*Math.PI / pointCount;
+    for (var theta = 0; theta < b*Math.PI; theta += inc) {
+        vertices.push(vec2(a*(Math.cos(theta) + theta*Math.sin(theta))+Math.random(), (a*(Math.sin(theta) - theta*Math.cos(theta))+Math.random())));
+    }
+    return vertices;
+};//makeMutantSpiral
 
 function generateCircle(radius, pointCount, x, y){
     var circleVertices = [];
@@ -100,52 +125,6 @@ function generateCircle(radius, pointCount, x, y){
     
     return circleVertices;
 };//generateCircle
-
-
-
-function makeSquare(size) {
-    //rp = ap cos(pθ)
-    var vertices = [size];
-    
-    var inc = 2*Math.PI / size;
-    var theta = .1;
-    for (var theta = 0; theta < size; theta+= inc) {
-        vertices.push(vec2(Math.cos(theta), size*Math.cos(theta)));
-    }
-};
-
-
-
-
-function generateCog(base, pointCount){
-    var vertices = [];
-    var inc = 2*Math.PI / pointCount;
-    var radius;
-    
-    for (var theta = 0; theta <2*Math.PI; theta += inc){
-        if ((vertices.length % 2) === 0)
-            radius = 2*base;
-        else
-            radius = base;
-        vertices.push(vec2(radius*Math.cos(theta), radius*Math.sin(theta)));
-    }//generate cog vertices
-    
-    return vertices;
-};//generateCog
-
-function generateStar(base, pointCount){
-    var vertices = [];
-    var inc = 2*Math.PI / pointCount;
-    var radius;
-    
-    for (var theta = 0; theta <2*Math.PI; theta += inc){
-        radius = Math.random()*base;
-        vertices.push(vec2(radius*Math.cos(theta), radius*Math.sin(theta)));
-        vertices.push(vec2(0,0));
-    }//generate Star
-    
-    return vertices;
-};//generateStar
 
 function drawObject(gl, program, vertices, color, glType) {
     var colorLocation = gl.getUniformLocation(program, "uColor"); 
