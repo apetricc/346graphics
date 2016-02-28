@@ -1,10 +1,10 @@
 /**
  * 
  * @author:  Edward Angel
- * Modified by Andrew Petriccione, Marietta E. Cameron
+ * Modified by Marietta E. Cameron
  * Last Modified: 2-22-2016
  * 
- * Draws a Color Diamond on screen
+ * Draws a Color Cube on screen
  */
 
 var gl;
@@ -112,7 +112,20 @@ function generateCube() {
         vec4(1, .25, 0.25, 1),
         vec4(.25, 0, .25, 1)
         ];
+/*
+    function() colorFunc{
+        var colors = new Array();   
+        for (var i = 0; i < 17; i++) {
+            //colors[i] = vec4(Math.random(),Math.random(),Math.random(),1);
+            colors[i] = vec4(1, 1, 0, 1);
+        }
+        return colors;
+    };
 
+  */      
+        /*
+        
+        */
     //example of an object in java script 
     var cube = {vertices: vertices, indices: indices, colors: colors, primtype: gl.TRIANGLES};
 
