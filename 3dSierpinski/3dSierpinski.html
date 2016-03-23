@@ -1,23 +1,17 @@
 <!DOCTYPE html>
-<!--
-   Author:  Edward Angel
-   Modified by: Andrew Petriccione, Marietta E. Cameron
-   Source: Modification from Code supplement to textbook-->
 <html>
-    <head>
-        
-        <title>Andrew's Diamond</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>3D Sierpinski, By Andrew Petriccione</title>
+
+
 <script id="vertex-shader" type="x-shader/x-vertex">
-
-attribute  vec4 vPosition;
-attribute  vec4 vColor;
+attribute vec4 vPosition;
+attribute vec4 vColor;
 varying vec4 fColor;
-
 uniform vec3 theta;
 
-void main() 
+void main()
 {
     // Compute the sines and cosines of theta for each of
     //   the three axes in one computation.
@@ -44,43 +38,38 @@ void main()
 
     fColor = vColor;
     gl_Position = rz * ry * rx * vPosition;
-} 
+}  
 </script>
 
 <script id="fragment-shader" type="x-shader/x-fragment">
-
 precision mediump float;
-   
-varying vec4 fColor;
 
 void
 main()
 {
-    gl_FragColor = fColor;
+    gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
 }
 </script>
 
-        <script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/webgl-utils.js"></script>
+<script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/webgl-utils.js"></script>
         <script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/initShaders.js"></script>
         <script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/MV.js"></script>
-        
-        <script type="text/javascript" src="myCube.js"></script>
+<script type="text/javascript" src="3dSierpinski.js"></script>
+</head>   
 
-
-    </head>
-    <body onload="canvasMain()">
-        <div>
-            <p>Andrew's</p> 
-            <h1>Diamond</h1>
-            <canvas id="gl-canvas" width="512" height="512" >
-                  oops ... your browser doesn't support the HTML5 canvas element
-            </canvas>            
-        </div>
-        <div>
+<body>
+<div>
+recursive steps  0 <input id="slider" type="range"
+ min="0" max="6" step="1" value="0" />
+ 6
+</div>
+<canvas id="gl-canvas" width="512" height="512">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+    <div>
             <button id= "xButton">Rotate X</button>
             <button id= "yButton">Rotate Y</button>
             <button id= "zButton">Rotate Z</button>
         </div>
-       
-    </body>
+</body>
 </html>
