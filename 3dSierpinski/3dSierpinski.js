@@ -29,7 +29,7 @@ function init()
         vec4(  1, -1,0,  1 )
     ];
     divideTriangle( vertices[0], vertices[1], vertices[2],
-                    6);
+                    3);
 
     //
     //  Configure WebGL
@@ -110,11 +110,36 @@ function divideTriangle( a, b, c, count )
         divideTriangle( a, ab, ac, count );
         divideTriangle( c, ac, bc, count );
         divideTriangle( b, bc, ab, count );
-       // divideTriangle(ab, bc, ac, count);
+        divideTriangle(ab, bc, ac, count);
+        //divideTriangle(ab, ac, bc, count);
     }
 }
 
 window.onload = init;
+
+ //new render function 
+function render()
+{
+    gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    theta[axis] += .5;  //rotate by 2degrees
+    gl.uniform3fv(thetaLoc, theta); //find theta in html  and set it
+
+    //gl.drawElements(gl.TRIANGLES, elementCount, gl.UNSIGNED_SHORT, 0);  //draw elements  ... elementCount number of indices  
+gl.drawArrays( gl.TRIANGLES, 0, points.length );
+    requestAnimFrame( render );  
+}
+
+/**
+function render()
+{
+    gl.clear( gl.COLOR_BUFFER_BIT );
+    gl.drawArrays( gl.TRIANGLES, 0, points.length );
+    points = [];
+    requestAnimFrame(init);
+}
+
+
 
 function drawObject(gl, program, obj, viewAxis) {
    
@@ -158,25 +183,4 @@ function drawObject(gl, program, obj, viewAxis) {
     render();
    
 }//drawObject
- //new render function 
-function render()
-{
-    gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-    theta[axis] += 0.1;  //rotate by 2degrees
-    gl.uniform3fv(thetaLoc, theta); //find theta in html  and set it
-
-    //gl.drawElements(gl.TRIANGLES, elementCount, gl.UNSIGNED_SHORT, 0);  //draw elements  ... elementCount number of indices  
-gl.drawArrays( gl.TRIANGLES, 0, points.length );
-    requestAnimFrame( render );  
-}
-
-/**
-function render()
-{
-    gl.clear( gl.COLOR_BUFFER_BIT );
-    gl.drawArrays( gl.TRIANGLES, 0, points.length );
-    points = [];
-    requestAnimFrame(init);
-}
 **/
