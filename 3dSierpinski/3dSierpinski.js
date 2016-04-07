@@ -8,7 +8,8 @@ var numTimesToSubdivide = 0;
 var theta = [0, 0, 0];
 var axis = 0;
 var thetaLoc;
-var elementCount; //number of indices
+//var elementCount; //number of indices
+var edges = [];
 
 function init()
 {
@@ -29,7 +30,7 @@ function init()
         vec4(  1, -1,0,  1 )
     ];
     divideTriangle( vertices[0], vertices[1], vertices[2],
-                    3);
+                    4);
 
     //
     //  Configure WebGL
@@ -96,10 +97,12 @@ function divideTriangle( a, b, c, count )
     else {
     
         //bisect the sides
-        
+        //if edge not used
         var ab = mix( a, b, 0.5 );
         var ac = mix( a, c, 0.5 );
         var bc = mix( b, c, 0.5 );
+        var abac = mix(ab, ac, .5);
+        var acab = mix(ac, ab, .5);
         
         ab[2] += Math.random() - 0.5;
 
@@ -111,7 +114,10 @@ function divideTriangle( a, b, c, count )
         divideTriangle( c, ac, bc, count );
         divideTriangle( b, bc, ab, count );
         divideTriangle(ab, bc, ac, count);
-        //divideTriangle(ab, ac, bc, count);
+        
+        //divideTriangle(ac, ac, ab, count);
+        //divideTriangle(ac, ac, ab, count);
+        
     }
 }
 
