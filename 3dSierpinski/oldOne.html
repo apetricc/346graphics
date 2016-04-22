@@ -1,27 +1,20 @@
-
 <!DOCTYPE html>
-<!--
-    Author: Edward Angel
-    Modified by: Marietta E. Cameron, Andrew Petriccione
-    Source: modified from code in textbook "Interactive Computer Graphics"-->
 <html>
-    <head>
-        <title>3D Sierpinski, By Andrew Petriccione</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" >
-        <script id="vertex-shader" type="x-shader/x-vertex">
-        
-        
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>3D Sierpinski, Andrew Petriccione</title>
+<!-- original code by Edward Angel and Marietta Cameron -->
 
+<script id="vertex-shader" type="x-shader/x-vertex">
 attribute vec4 vPosition;
 attribute vec4 vColor;
 varying vec4 fColor;
 uniform vec3 theta;
 
-
 void main()
 {
     // Compute the sines and cosines of theta for each of
-    //   the three axes in one computation; rotation matrix.
+    //   the three axes in one computation.
     vec3 angles = radians( theta );
     vec3 c = cos( angles );
     vec3 s = sin( angles );
@@ -49,29 +42,27 @@ void main()
 </script>
 
 <script id="fragment-shader" type="x-shader/x-fragment">
-
 precision mediump float;
-varying vec4 fColor;
 
 void
 main()
 {
-    gl_FragColor = fColor;
+    gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
 }
 </script>
 
 <script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/webgl-utils.js"></script>
         <script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/initShaders.js"></script>
         <script type="text/javascript" src="http://arden.cs.unca.edu/~cameron/Angel/SourceCode/Common/MV.js"></script>
-<script type="text/javascript" src="Sierp2.js"></script>
+<script type="text/javascript" src="3dSierpinski.js"></script>
 </head>   
 
-<body onload="canvasMain()">
-<div>
+<body>
+<!--<div>
 recursive steps  0 <input id="slider" type="range"
  min="0" max="6" step="1" value="0" />
  6
-</div>
+</div>-->
 <canvas id="gl-canvas" width="512" height="512">
 Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
